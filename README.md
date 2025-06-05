@@ -21,8 +21,15 @@
 - autoconf-archive
 
 ## Maintainer notes
-- Be careful about paths. Your might need to tweak paths either in configure
+Be careful about paths. Your might need to tweak paths either in configure
   files, or in code based on your environment.
+- Line 49 of `/bin/postgresql-setup` in function `builddir_source ()` has to
+  be changed to location of your project - otherwise system path will get
+  hardcoded into resulting script, so you won't be able to run your build
+  without full installation into system paths
+    - For example Line 49 should be `. "/postgresql-setup/$file"` if your
+      working project is located at `/postgresql-setup`
+    - *Do NOT commit/merge this change*
 
 ### Build instructions
 1. `autoreconf -vfi`
