@@ -3,6 +3,7 @@
 ## Requires
 
 ### BuildRequires
+- make
 - m4
 - docbook-utils
 - help2man
@@ -22,7 +23,7 @@
 
 ## Usage
 This script is used as a wrapper around PostgreSQL initialization and upgrade
-commands. It also parses init system service files and/or enviroment files to
+commands. It also parses init system service files and/or environment files to
 correctly find datadir based on current system.
 
 ### Initialization
@@ -34,7 +35,7 @@ use `./postgresql-setup --upgrade`.
 
 If your distribution doesn't include this
 script with PostgreSQL and you are using this on your own, please update
-`etc/postgresql-setup/upgrade/postgresql.conf` to reflect your setup.
+`./etc/postgresql-setup/upgrade/postgresql.conf` to reflect your setup.
 
 ### Running without systemd/init system
 Your setup might not include systemd as the init system or include any
@@ -46,15 +47,15 @@ service file in preconfigured path directly. By default the path is
 If there is no systemd service file, or for whatever reason the script is unable
 to find valid PostgreSQL data directory, you can still provide PostgreSQL data
 directory path manually by using `--datadir` argument. For example when
-initializing new data directory use `./postgresql-setup --initdb --datadir=/my/path`.
+initializing new data directory use `postgresql-setup --initdb --datadir=/my/path`.
 
 This feature is most beneficial when using this script inside container images,
 as it gives you the most control with least dependencies.
 
 ## Maintainer notes
-Be careful about paths. Your might need to tweak paths either in configure
+Be careful about paths. You might need to tweak paths either in the configure
   files, or in code based on your environment.
-- Line 49 of `/bin/postgresql-setup` in function `builddir_source ()` has to
+- Line 49 of `./bin/postgresql-setup.in` in function `builddir_source ()` has to
   be changed to location of your project otherwise you won't be able to run your
   build without full installation into system paths
     - For example line should be `. "/postgresql-setup/$file"` if your
